@@ -1,4 +1,4 @@
-{% extends 'sb_admin.html.twig' %}
+{% extends 'sbadmin.html.twig' %}
 
 {% block title %}Hello AdminController!{% endblock %}
 
@@ -559,6 +559,15 @@
                         </div>
                     </div>
                 </main>
+
+
+                
                 
 
 {% endblock %}
+
+{% block js_end %}
+        <script src="{{ asset('sbadmin/assets/demo/chart-area-demo.js') }}"></script>
+        <script src="{{ asset('sbadmin/assets/demo/chart-bar-demo.js') }}"></script>
+{% endblock %}
+
