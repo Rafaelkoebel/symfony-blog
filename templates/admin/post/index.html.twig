@@ -6,7 +6,7 @@
 <main>
     <div class="container-fluid px-4">
     
-                    <h1>Liste des posts</h1>
+                    <h1>Liste des articles<a href="{{ path('admin_post_add') }}" class="btn btn-primary">Ajouter</a></h1>
     
 
                     <div class="card mb-4">
@@ -21,7 +21,7 @@
                                         <th>ID</th>
                                         <th>Titre</th>
                                         <th>Contenu</th>
-                                        <th></th>
+                                        <th>Active</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -31,7 +31,7 @@
                                         <th>ID</th>
                                         <th>Titre</th>
                                         <th>Contenu</th>
-                                        <th></th>
+                                        <th>Active</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -42,6 +42,11 @@
                                         <td>{{post.id}}</td>
                                         <td>{{post.title}}</td>
                                         <td>{{post.content}}</td>
+                                        <td>
+                                            <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" name="active" id="customSwitch{{ post.id }}" data-id="{{ post.id }}" {{ post.active ? 'checked' : null}}></div>
+                                        </td>
+                                        <td><a href="{{ path('admin_post_update', {id: post.id}) }}" class="btn btn-primary btn-sm">Modifier</a></td>
                                         <td><a href="{{ path('admin_post_delete', {id: post.id}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Suppression ?')">Supprimer</a></td>
                                     </tr>
                                     {% endfor %}
@@ -53,4 +58,29 @@
                     
     </div>
 </main>
+{% endblock %}
+
+{% block js_end %}
+<script>
+ window.onload = () => {
+     let activate = document.querySelectorAll("[type=checkbox]")
+            for(let button of activate) {
+                button.addEventListener("click", function(){
+                    let xmlhttp = new XMLHttpRequest
+                    xmlhttp.open("get", `/admin/post/activate/${this.dataset.id}`)
+                    xmlhttp.send() 
+                })
+            }
+
+
+    let btdeletes = document.querySelectorAll(".modal-trigger")
+    for(let btdelete of btdeletes) {
+        btdelete.addEventListener("click", function(){
+            document.querySelector(".modal-footer a").href=`/admin/category/delete/${this.dataset.id}`
+            document.querySelector(".modal-body").innerText = `Etes-vous sûr de vouloir supprimer l'article "${this.dataset.title}"`
+        })
+    }
+ }
+</script>
+
 {% endblock %}

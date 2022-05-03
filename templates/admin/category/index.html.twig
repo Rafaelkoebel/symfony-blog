@@ -84,6 +84,16 @@
 {% block js_end %}
 <script>
  window.onload = () => {
+     let activate = document.querySelectorAll("[type=checkbox]")
+            for(let button of activate) {
+                button.addEventListener("click", function(){
+                    let xmlhttp = new XMLHttpRequest
+                    xmlhttp.open("get", `/admin/post/activate/${this.dataset.id}`)
+                    xmlhttp.send() 
+                })
+            }
+
+
     let btdeletes = document.querySelectorAll(".modal-trigger")
     for(let btdelete of btdeletes) {
         btdelete.addEventListener("click", function(){
